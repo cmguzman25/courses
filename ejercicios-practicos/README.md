@@ -6,7 +6,10 @@ Código, tablas y campos están en inglés; los enunciados, en español.
 
 ## Arrancar
 
+La primera vez, crea tu `.env` a partir del ejemplo (el `.env` no se sube a git):
+
 ```bash
+cp .env.example .env
 docker compose up -d
 ```
 
