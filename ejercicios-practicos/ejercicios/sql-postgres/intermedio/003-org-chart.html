@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Organigrama</title>
+<link rel="stylesheet" href="../../estilos.css">
+</head>
+<body><main>
+<p class="volver"><a href="../../index.html">← Índice</a></p>
+<span class="nivel intermedio">Intermedio</span>
+<h1>003 · Organigrama: jefe y equipo de cada empleado</h1>
+<p class="meta">Código: <code>sql-postgres/intermedio/003</code> · Temas: SELF JOIN, LEFT JOIN, COUNT, COALESCE · Base: <code>practice</code></p>
+
+<h2>Contexto</h2>
+<p>Recursos Humanos quiere un organigrama sencillo en forma de tabla: para cada empleado, quién es su jefe directo y cuántas personas tiene a su cargo.</p>
+
+<h2>Tabla implicada</h2>
+<pre>employees(employee_id, first_name, last_name, job_title, manager_id, salary, hire_date)</pre>
+<p>La columna <code>manager_id</code> apunta al <code>employee_id</code> del jefe, <strong>en la misma tabla</strong>. La directora no tiene jefe: su <code>manager_id</code> es <code>null</code>.</p>
+
+<h2>Enunciado</h2>
+<p>Lista <strong>los 8 empleados</strong> con:</p>
+<ul>
+  <li>el nombre completo de su jefe directo, o el texto <code>Sin jefe</code> si no tiene;</li>
+  <li>cuántos empleados dependen directamente de él (<code>0</code> si no tiene a nadie a su cargo).</li>
+</ul>
+
+<h2>Resultado esperado</h2>
+<table>
+  <tr><th>Columna</th><th>Contenido</th></tr>
+  <tr><td><code>employee_id</code></td><td>Id del empleado</td></tr>
+  <tr><td><code>employee</code></td><td>Nombre y apellido del empleado separados por un espacio</td></tr>
+  <tr><td><code>job_title</code></td><td>Puesto</td></tr>
+  <tr><td><code>manager</code></td><td>Nombre y apellido del jefe, o <code>Sin jefe</code></td></tr>
+  <tr><td><code>team_size</code></td><td>Número de empleados cuyo jefe directo es esta persona</td></tr>
+</table>
+<p><strong>Orden:</strong> por <code>employee_id</code> ascendente.</p>
+<p class="meta">Las columnas deben llamarse y aparecer exactamente así y en ese orden. Deben salir 8 filas.</p>
+
+<details><summary>Pista 1</summary><p>Puedes poner la misma tabla dos (o tres) veces en el <code>from</code>/<code>join</code>, siempre que cada una tenga un alias distinto. Piensa en una copia como "el empleado" y otra como "su jefe".</p></details>
+<details><summary>Pista 2</summary><p>Para el jefe: la copia "jefe" se une donde su <code>employee_id</code> es el <code>manager_id</code> del empleado. Para el equipo, al revés: otra copia cuyo <code>manager_id</code> es el <code>employee_id</code> del empleado.</p></details>
+<details><summary>Pista 3</summary><p>Si la directora desaparece o los vendedores no salen con <code>0</code>, revisa qué tipo de <code>join</code> usas (ya te pasó en el 002).</p></details>
+<details><summary>Pista 4</summary><p>Ojo con <code>concat</code>: si el jefe no existe, <code>concat(null, ' ', null)</code> devuelve <code>' '</code> (un espacio), no <code>null</code>, y entonces <code>coalesce</code> no lo reemplaza. Con <code>||</code> sí: <code>null || ' ' || null</code> es <code>null</code>.</p></details>
+</main></body>
+</html>

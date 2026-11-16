@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ventas por categoría</title>
+<link rel="stylesheet" href="../../estilos.css">
+</head>
+<body><main>
+<p class="volver"><a href="../../index.html">← Índice</a></p>
+<span class="nivel intermedio">Intermedio</span>
+<h1>001 · Ventas entregadas por categoría</h1>
+<p class="meta">Código: <code>sql-postgres/intermedio/001</code> · Temas: JOIN, GROUP BY, HAVING, SUM · Base: <code>practice</code></p>
+
+<h2>Contexto</h2>
+<p>Dirección quiere saber qué categorías de producto están generando más ingresos reales, es decir, contando solo lo que ya ha llegado al cliente.</p>
+
+<h2>Tablas implicadas</h2>
+<pre>categories(category_id, name)
+products(product_id, name, category_id, price, stock)
+orders(order_id, customer_id, employee_id, order_date, status)
+order_items(order_id, product_id, quantity, unit_price)</pre>
+
+<h2>Enunciado</h2>
+<p>Para cada categoría, calcula cuántas unidades se han vendido y el importe total vendido, teniendo en cuenta <strong>solo los pedidos con <code>status = 'delivered'</code></strong>. El importe de cada línea es <code>quantity * unit_price</code> (usa el precio de <code>order_items</code>, no el del catálogo).</p>
+<p>Muestra únicamente las categorías cuyo importe total sea <strong>mayor que 1000</strong>.</p>
+
+<h2>Resultado esperado</h2>
+<table>
+  <tr><th>Columna</th><th>Contenido</th></tr>
+  <tr><td><code>category</code></td><td>Nombre de la categoría</td></tr>
+  <tr><td><code>units_sold</code></td><td>Suma de las cantidades</td></tr>
+  <tr><td><code>total_sales</code></td><td>Suma de quantity × unit_price</td></tr>
+</table>
+<p><strong>Orden:</strong> por <code>total_sales</code> de mayor a menor.</p>
+<p class="meta">Las columnas deben llamarse y aparecer exactamente así y en ese orden.</p>
+
+<details><summary>Pista 1</summary><p>Necesitas unir las cuatro tablas: la línea de pedido conoce el producto, el producto conoce la categoría y el pedido conoce el estado.</p></details>
+<details><summary>Pista 2</summary><p><code>WHERE</code> filtra filas antes de agrupar; <code>HAVING</code> filtra grupos después de agrupar.</p></details>
+</main></body>
+</html>

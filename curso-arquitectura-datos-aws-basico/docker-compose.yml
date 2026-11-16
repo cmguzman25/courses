@@ -1,0 +1,66 @@
+services:
+  # AWS emulator
+  localstack:
+    image: localstack/localstack:4
+    container_name: localstack
+    ports:
+      - "127.0.0.1:4567:4566"   # 4567 on Windows, to avoid clashing with another LocalStack
+    environment:
+      - SERVICES=s3,iam,sts,lambda,sqs,sns,kinesis,firehose,dynamodb,dynamodbstreams,stepfunctions,events,scheduler,logs,cloudwatch,secretsmanager,ssm,kms
+      - DEBUG=0
+      # - LOCALSTACK_AUTH_TOKEN=${LOCALSTACK_AUTH_TOKEN}
+    volumes:
+      - "./.localstack:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"   # LocalStack uses it to run Lambdas
+
+  # Toolbox: you work inside this one (Terraform, AWS CLI, Python)
+  herramientas:
+    build: ./docker/herramientas
+    container_name: herramientas
+    working_dir: /curso
+    volumes:
+      - "./:/curso"                                   # course folder, shared with Windows
+      - "terraform-plugins:/root/.terraform.d/plugin-cache"
+    environment:
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ENDPOINT_URL=http://localstack:4566     # AWS CLI and boto3 point to LocalStack automatically
+      - TF_PLUGIN_CACHE_DIR=/root/.terraform.d/plugin-cache
+    depends_on:
+      - localstack
+
+  # Used from topic 12 onwards. Only start with --profile.
+  spark:
+    image: apache/spark:3.5.3-scala2.12-java17-python3-ubuntu
+    container_name: spark
+    user: root
+    command: ["sleep", "infinity"]
+    profiles: ["spark"]
+    volumes:
+      - "./jobs:/opt/jobs"
+    depends_on:
+      - localstack
+
+  postgres:
+    image: postgres:16
+    container_name: dwh
+    profiles: ["dwh"]
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=dwh_admin
+      - POSTGRES_PASSWORD=dwh_admin
+      - POSTGRES_DB=dwh
+
+volumes:
+  terraform-plugins:
+
+# Dedicated network with a fixed range. Avoids the "all predefined address pools
+# have been fully subnetted" error when Docker already has many networks.
+networks:
+  default:
+    name: curso-datos
+    ipam:
+      config:
+        - subnet: 10.150.0.0/24

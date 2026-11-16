@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ejercicios SQL</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body><main>
+<h1>Ejercicios prácticos</h1>
+<p class="meta">Abre un enunciado, escribe tu consulta en pgAdmin (<a href="http://localhost:5051">localhost:5051</a>, base <code>practice</code>) y pásasela a Claude para corregirla y registrarla.</p>
+
+<h2>SQL · PostgreSQL</h2>
+<div class="tarjeta">
+  <p><span class="nivel basico">Básico</span></p>
+  <ul class="ejercicios">
+    <li><a href="sql-postgres/basico/001-customers-by-city.html">001 · Clientes de Madrid</a> <span class="meta">— SELECT, WHERE, ORDER BY</span></li>
+  </ul>
+</div>
+<div class="tarjeta">
+  <p><span class="nivel intermedio">Intermedio</span></p>
+  <ul class="ejercicios">
+    <li><a href="sql-postgres/intermedio/001-sales-by-category.html">001 · Ventas entregadas por categoría</a> <span class="meta">— JOIN, GROUP BY, HAVING</span></li>
+    <li><a href="sql-postgres/intermedio/002-customer-activity.html">002 · Actividad de todos los clientes</a> <span class="meta">— LEFT JOIN, COUNT DISTINCT, COALESCE</span></li>
+    <li><a href="sql-postgres/intermedio/003-org-chart.html">003 · Organigrama: jefe y equipo de cada empleado</a> <span class="meta">— SELF JOIN, LEFT JOIN, COUNT</span></li>
+  </ul>
+</div>
+<div class="tarjeta">
+  <p><span class="nivel avanzado">Avanzado</span></p>
+  <ul class="ejercicios">
+    <li><a href="sql-postgres/avanzado/001-top-customers-by-month.html">001 · Top 3 de clientes por mes</a> <span class="meta">— CTE, funciones de ventana</span></li>
+  </ul>
+</div>
+
+<h2>Modelo de datos (base <code>practice</code>)</h2>
+<pre>customers(customer_id, first_name, last_name, email, city, signup_date)
+categories(category_id, name)
+products(product_id, name, category_id → categories, price, stock)
+employees(employee_id, first_name, last_name, job_title, manager_id → employees, salary, hire_date)
+orders(order_id, customer_id → customers, employee_id → employees, order_date, status)
+order_items(order_id → orders, product_id → products, quantity, unit_price)</pre>
+<p class="meta"><code>status</code> puede ser <code>pending</code> (pendiente), <code>shipped</code> (enviado), <code>delivered</code> (entregado) o <code>cancelled</code> (cancelado). El importe de una línea es <code>quantity * unit_price</code>.</p>
+</main></body>
+</html>

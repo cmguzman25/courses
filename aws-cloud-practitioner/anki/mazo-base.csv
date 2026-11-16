@@ -1,0 +1,59 @@
+#separator:Semicolon
+#html:false
+#tags column:3
+¿Cuál es la frase que resume el modelo de responsabilidad compartida?;AWS es responsable de la seguridad DE la nube. El cliente, de la seguridad EN la nube.;dominio-2
+En EC2, ¿quién parchea el sistema operativo?;El cliente. EC2 es IaaS.;dominio-2
+En RDS, ¿quién parchea el motor de base de datos?;AWS. Es un servicio gestionado.;dominio-2
+Security Group: ¿con estado o sin estado?;Con estado (stateful). Recuerda la conexión de vuelta.;contraste dominio-2
+Network ACL: ¿con estado o sin estado?;Sin estado (stateless). Hay que permitir ida y vuelta.;contraste dominio-2
+¿Cuál admite reglas Deny, Security Group o NACL?;NACL. El Security Group solo admite Allow.;contraste dominio-2
+¿A qué nivel actúa un Security Group?;A nivel de instancia (ENI).;contraste dominio-2
+¿A qué nivel actúa una NACL?;A nivel de subred.;contraste dominio-2
+CloudWatch: ¿qué responde?;¿Cómo va? Métricas, logs, alarmas y paneles.;contraste dominio-3
+CloudTrail: ¿qué responde?;¿Quién hizo qué y cuándo? Auditoría de llamadas a la API.;contraste dominio-3
+AWS Config: ¿qué responde?;¿Cómo está configurado y qué cambió? Inventario y conformidad.;contraste dominio-3
+Alguien borró una instancia y quiero saber quién. ¿Qué servicio?;CloudTrail.;dominio-3
+Quiero avisos si la CPU pasa del 80%. ¿Qué servicio?;Alarma de CloudWatch.;dominio-3
+EBS: ¿a cuántas instancias y cuántas AZ?;Normalmente a una instancia, y vive en una sola AZ.;contraste dominio-3
+EFS: ¿a cuántas instancias y cuántas AZ?;A muchas instancias a la vez, y es multi-AZ.;contraste dominio-3
+¿Qué almacenamiento de EC2 se pierde al parar la instancia?;Instance Store. Es efímero.;contraste dominio-3
+¿Qué durabilidad ofrece S3?;11 nueves (99,999999999%).;dominio-3
+¿Tamaño máximo de un objeto en S3?;5 TB.;dominio-3
+Clase de S3 para acceso impredecible;S3 Intelligent-Tiering.;dominio-3
+Clase de S3 más barata para archivo de largo plazo;S3 Glacier Deep Archive (recuperación en 12+ horas).;dominio-3
+¿Qué mueve objetos de S3 entre clases automáticamente?;Una política de ciclo de vida.;dominio-3
+Multi-AZ en RDS: ¿para qué sirve?;Alta disponibilidad con failover automático. No sirve para leer.;contraste dominio-3
+Réplica de lectura en RDS: ¿para qué sirve?;Repartir la carga de lectura. Mejora rendimiento, no es failover.;contraste dominio-3
+Modelo de compra EC2 más barato para cargas interrumpibles;Spot (hasta ~90% de descuento, aviso de 2 minutos).;contraste dominio-3
+Modelo de compra EC2 para carga estable 3 años, con flexibilidad;Savings Plans (compromiso de gasto por hora).;contraste dominio-3
+¿Cuál es la diferencia entre Región y Zona de Disponibilidad?;Región = área geográfica. AZ = uno o más centros de datos aislados dentro de la Región.;contraste dominio-1
+¿Qué es una Ubicación de Borde?;Punto de presencia cercano al usuario para cachear contenido. Lo usan CloudFront y Route 53.;contraste dominio-1
+Los 4 criterios para elegir Región;Cumplimiento, latencia, precio y disponibilidad del servicio.;dominio-1
+Los 6 pilares del Well-Architected Framework;Excelencia operativa, Seguridad, Fiabilidad, Eficiencia del rendimiento, Optimización de costos, Sostenibilidad.;dominio-1
+Escalabilidad vs elasticidad;Escalabilidad = puedes crecer. Elasticidad = creces y decreces solo, según demanda.;contraste dominio-1
+GuardDuty: ¿qué hace?;Detección continua de amenazas analizando logs.;contraste dominio-2
+Inspector: ¿qué hace?;Busca vulnerabilidades en EC2, contenedores y Lambda.;contraste dominio-2
+Macie: ¿qué hace?;Descubre y protege datos sensibles (PII) en S3.;contraste dominio-2
+¿Dónde descargas informes de cumplimiento como SOC o ISO?;AWS Artifact.;dominio-2
+¿Qué protege contra DDoS de forma gratuita y automática?;AWS Shield Standard.;dominio-2
+Usuario IAM vs Rol IAM;Usuario = credenciales permanentes. Rol = permisos temporales que se asumen, sin contraseña.;contraste dominio-2
+¿Cómo das permisos de S3 a una instancia EC2?;Con un rol IAM. Nunca con claves de acceso dentro de la instancia.;dominio-2
+Un Allow y un Deny sobre lo mismo: ¿cuál gana?;El Deny explícito siempre gana.;dominio-2
+Direct Connect vs Site-to-Site VPN;Direct Connect = línea física dedicada, latencia consistente. VPN = túnel cifrado por internet, rápido y barato de montar.;contraste dominio-3
+CloudFront vs Global Accelerator;CloudFront cachea contenido HTTP en el borde. Global Accelerator no cachea, da IPs estáticas y enruta TCP/UDP por la red de AWS.;contraste dominio-3
+SQS vs SNS;SQS = cola, un consumidor procesa cada mensaje. SNS = pub/sub, muchos suscriptores reciben el mismo mensaje.;contraste dominio-3
+¿Desde qué plan de soporte tienes Trusted Advisor completo?;Desde Business.;contraste dominio-4
+¿Desde qué plan de soporte tienes un TAM dedicado?;Enterprise. On-Ramp da acceso a un grupo de TAM, no dedicado.;contraste dominio-4
+¿Desde qué plan hay soporte 24/7 por teléfono y chat?;Business.;contraste dominio-4
+Pricing Calculator vs Cost Explorer;Calculator estima antes de gastar. Cost Explorer analiza lo ya gastado y prevé.;contraste dominio-4
+¿Qué te avisa al superar un umbral de gasto?;AWS Budgets.;dominio-4
+Los 3 principios de precios de AWS;Pago por uso. Paga menos al comprometerte. Paga menos cuanto más usas.;dominio-4
+¿Qué aporta la facturación consolidada?;Una sola factura y agregación del uso para alcanzar antes los descuentos por volumen.;dominio-4
+¿Qué es AWS CloudFormation?;Infraestructura como código: describes la infraestructura en plantillas y AWS la crea.;dominio-3
+¿Qué es una SCP en AWS Organizations?;Política que define el máximo de permisos posibles en una cuenta u OU. No concede permisos.;dominio-2
+Las 7 R de migración;Rehost, Replatform, Repurchase, Refactor, Retire, Retain, Relocate.;dominio-1
+Las 6 perspectivas del Cloud Adoption Framework;Negocio, Personas, Gobernanza, Plataforma, Seguridad, Operaciones.;dominio-1
+ECS vs EKS;ECS = orquestador de contenedores propio de AWS, más simple. EKS = Kubernetes gestionado.;contraste dominio-3
+¿Qué es AWS Fargate?;El modo sin servidores de ECS y EKS. No gestionas las EC2 subyacentes.;dominio-3
+¿Cuál es el límite de ejecución de una función Lambda?;15 minutos.;dominio-3
+Athena vs Redshift;Athena = SQL directo sobre S3, serverless, pago por dato escaneado. Redshift = data warehouse para analítica intensiva.;contraste dominio-3

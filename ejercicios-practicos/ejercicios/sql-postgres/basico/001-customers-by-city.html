@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clientes de Madrid</title>
+<link rel="stylesheet" href="../../estilos.css">
+</head>
+<body><main>
+<p class="volver"><a href="../../index.html">← Índice</a></p>
+<span class="nivel basico">Básico</span>
+<h1>001 · Clientes de Madrid</h1>
+<p class="meta">Código: <code>sql-postgres/basico/001</code> · Temas: SELECT, WHERE, ORDER BY · Base: <code>practice</code></p>
+
+<h2>Contexto</h2>
+<p>El equipo de marketing va a organizar un evento en Madrid y necesita la lista de clientes que viven allí para enviarles una invitación.</p>
+
+<h2>Tabla implicada</h2>
+<pre>customers(customer_id, first_name, last_name, email, city, signup_date)</pre>
+
+<h2>Enunciado</h2>
+<p>Obtén el nombre, el apellido y el email de todos los clientes cuya ciudad (<code>city</code>) sea <code>Madrid</code>.</p>
+
+<h2>Resultado esperado</h2>
+<table>
+  <tr><th>Columna</th><th>Contenido</th></tr>
+  <tr><td><code>first_name</code></td><td>Nombre del cliente</td></tr>
+  <tr><td><code>last_name</code></td><td>Apellido del cliente</td></tr>
+  <tr><td><code>email</code></td><td>Email del cliente</td></tr>
+</table>
+<p><strong>Orden:</strong> por <code>last_name</code> ascendente y, si coincide, por <code>first_name</code> ascendente.</p>
+<p class="meta">Las columnas deben llamarse y aparecer exactamente así y en ese orden.</p>
+
+<details><summary>Pista 1</summary><p>Filtra filas con <code>WHERE columna = 'valor'</code>. Los textos van entre comillas simples.</p></details>
+<details><summary>Pista 2</summary><p><code>ORDER BY</code> admite varias columnas separadas por comas; se aplican de izquierda a derecha.</p></details>
+</main></body>
+</html>

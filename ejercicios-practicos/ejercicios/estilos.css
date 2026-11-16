@@ -1,0 +1,35 @@
+:root {
+  --fondo: #f7f7f5; --texto: #1f2328; --suave: #59636e; --borde: #d8dee4;
+  --tarjeta: #ffffff; --codigo: #eef1f4; --acento: #2563eb;
+  --basico: #15803d; --intermedio: #b45309; --avanzado: #b91c1c;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo: #16181d; --texto: #e6e8eb; --suave: #9aa4af; --borde: #2f343c;
+    --tarjeta: #1e2128; --codigo: #262a32; --acento: #7aa2ff;
+    --basico: #4ade80; --intermedio: #fbbf24; --avanzado: #f87171;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--fondo); color: var(--texto);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
+a { color: var(--acento); }
+h1 { font-size: 1.8rem; line-height: 1.25; margin: 8px 0 4px; }
+h2 { font-size: 1.15rem; margin-top: 32px; border-bottom: 1px solid var(--borde); padding-bottom: 4px; }
+.meta { color: var(--suave); font-size: .95rem; }
+.nivel { display: inline-block; font-size: .8rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .04em; padding: 2px 10px; border-radius: 999px; border: 1px solid currentColor; }
+.nivel.basico { color: var(--basico); } .nivel.intermedio { color: var(--intermedio); } .nivel.avanzado { color: var(--avanzado); }
+code, pre { font-family: ui-monospace, Consolas, monospace; font-size: .9rem; background: var(--codigo); border-radius: 4px; }
+code { padding: 1px 5px; }
+pre { padding: 12px 14px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: .92rem; display: block; overflow-x: auto; }
+th, td { border: 1px solid var(--borde); padding: 6px 10px; text-align: left; white-space: nowrap; }
+th { background: var(--codigo); }
+.tarjeta { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 8px; padding: 16px 20px; margin: 12px 0; }
+details { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 8px; padding: 10px 16px; margin: 10px 0; }
+summary { cursor: pointer; font-weight: 600; }
+ul.ejercicios { list-style: none; padding: 0; }
+ul.ejercicios li { margin: 8px 0; }
+.volver { font-size: .95rem; }

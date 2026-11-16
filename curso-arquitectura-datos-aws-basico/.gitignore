@@ -1,0 +1,5 @@
+.localstack/
+**/.terraform/
+*.tfstate
+*.tfstate.*
+**/build/

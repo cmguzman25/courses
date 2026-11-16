@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "Ejercicios SQL",
+      "Group": "Servers",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "practice",
+      "Username": "admin",
+      "SSLMode": "prefer"
+    }
+  }
+}

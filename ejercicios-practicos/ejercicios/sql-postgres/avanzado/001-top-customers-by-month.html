@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Top clientes por mes</title>
+<link rel="stylesheet" href="../../estilos.css">
+</head>
+<body><main>
+<p class="volver"><a href="../../index.html">← Índice</a></p>
+<span class="nivel avanzado">Avanzado</span>
+<h1>001 · Top 3 de clientes por mes</h1>
+<p class="meta">Código: <code>sql-postgres/avanzado/001</code> · Temas: CTE, DATE_TRUNC, funciones de ventana (RANK) · Base: <code>practice</code></p>
+
+<h2>Contexto</h2>
+<p>El programa de fidelización premia cada mes a los tres clientes que más han gastado. Si hay empate, todos los empatados reciben el premio.</p>
+
+<h2>Tablas implicadas</h2>
+<pre>customers(customer_id, first_name, last_name, email, city, signup_date)
+orders(order_id, customer_id, employee_id, order_date, status)
+order_items(order_id, product_id, quantity, unit_price)</pre>
+
+<h2>Enunciado</h2>
+<p>Calcula, para cada mes, cuánto ha gastado cada cliente (suma de <code>quantity * unit_price</code>) contando <strong>todos los pedidos excepto los que tienen <code>status = 'cancelled'</code></strong>.</p>
+<p>Después, dentro de cada mes, asigna una posición a cada cliente según su gasto de mayor a menor. Los empates comparten posición y la siguiente posición se salta (si dos clientes empatan en el 2.º puesto, el siguiente es el 4.º). Muestra solo los clientes con posición <strong>menor o igual que 3</strong>.</p>
+
+<h2>Resultado esperado</h2>
+<table>
+  <tr><th>Columna</th><th>Contenido</th></tr>
+  <tr><td><code>month</code></td><td>Primer día del mes, de tipo <code>date</code> (p. ej. <code>2026-01-01</code>)</td></tr>
+  <tr><td><code>customer_id</code></td><td>Id del cliente</td></tr>
+  <tr><td><code>customer</code></td><td>Nombre y apellido separados por un espacio</td></tr>
+  <tr><td><code>total_spent</code></td><td>Gasto del cliente en ese mes</td></tr>
+  <tr><td><code>ranking</code></td><td>Posición dentro del mes</td></tr>
+</table>
+<p><strong>Orden:</strong> por <code>month</code>, luego <code>ranking</code> y luego <code>customer_id</code>, todo ascendente.</p>
+<p class="meta">Las columnas deben llamarse y aparecer exactamente así y en ese orden.</p>
+
+<details><summary>Pista 1</summary><p><code>DATE_TRUNC('month', order_date)</code> devuelve un <code>timestamp</code>; conviértelo con <code>::date</code>.</p></details>
+<details><summary>Pista 2</summary><p>Una función de ventana no se puede usar directamente en el <code>WHERE</code>. Calcúlala en un <code>WITH</code> (CTE) o subconsulta y filtra fuera.</p></details>
+<details><summary>Pista 3</summary><p>Compara <code>RANK()</code>, <code>DENSE_RANK()</code> y <code>ROW_NUMBER()</code>: solo una cumple la regla de empates del enunciado.</p></details>
+</main></body>
+</html>

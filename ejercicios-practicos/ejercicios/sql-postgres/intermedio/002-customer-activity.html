@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Actividad de clientes</title>
+<link rel="stylesheet" href="../../estilos.css">
+</head>
+<body><main>
+<p class="volver"><a href="../../index.html">← Índice</a></p>
+<span class="nivel intermedio">Intermedio</span>
+<h1>002 · Actividad de todos los clientes</h1>
+<p class="meta">Código: <code>sql-postgres/intermedio/002</code> · Temas: LEFT JOIN, COUNT DISTINCT, COALESCE, GROUP BY · Base: <code>practice</code></p>
+
+<h2>Contexto</h2>
+<p>El equipo comercial quiere una ficha rápida de <strong>todos</strong> los clientes: cuántos pedidos han hecho y cuánto han gastado. Les interesan especialmente los que no han comprado nunca, para lanzarles una campaña de bienvenida, así que esos también tienen que aparecer.</p>
+
+<h2>Tablas implicadas</h2>
+<pre>customers(customer_id, first_name, last_name, email, city, signup_date)
+orders(order_id, customer_id, employee_id, order_date, status)
+order_items(order_id, product_id, quantity, unit_price)</pre>
+
+<h2>Enunciado</h2>
+<p>Para cada cliente, muestra cuántos pedidos ha hecho y cuánto ha gastado en total (suma de <code>quantity * unit_price</code>).</p>
+<ul>
+  <li>No cuentes los pedidos con <code>status = 'cancelled'</code>, ni para el número de pedidos ni para el gasto.</li>
+  <li>Deben salir <strong>los 20 clientes</strong>, también los que no tienen ningún pedido válido. Para ellos, <code>orders_count</code> es <code>0</code> y <code>total_spent</code> es <code>0.00</code>.</li>
+  <li><code>total_spent</code> va con 2 decimales.</li>
+</ul>
+
+<h2>Resultado esperado</h2>
+<table>
+  <tr><th>Columna</th><th>Contenido</th></tr>
+  <tr><td><code>customer_id</code></td><td>Id del cliente</td></tr>
+  <tr><td><code>customer</code></td><td>Nombre y apellido separados por un espacio</td></tr>
+  <tr><td><code>city</code></td><td>Ciudad</td></tr>
+  <tr><td><code>orders_count</code></td><td>Número de pedidos no cancelados</td></tr>
+  <tr><td><code>total_spent</code></td><td>Gasto total con 2 decimales (<code>0.00</code> si no hay compras)</td></tr>
+</table>
+<p><strong>Orden:</strong> por <code>total_spent</code> de mayor a menor y, si empatan, por <code>customer_id</code> ascendente.</p>
+<p class="meta">Las columnas deben llamarse y aparecer exactamente así y en ese orden. Deben salir 20 filas.</p>
+
+<details><summary>Pista 1</summary><p>Un <code>join</code> normal solo deja las filas que tienen pareja en las dos tablas. Busca qué tipo de <code>join</code> conserva todas las filas de la tabla de la izquierda aunque no tengan pareja.</p></details>
+<details><summary>Pista 2</summary><p>Un pedido tiene varias líneas. Si cuentas con <code>count(o.order_id)</code> después de unir <code>order_items</code>, cada pedido cuenta tantas veces como líneas tenga. Prueba <code>count(distinct ...)</code>.</p></details>
+<details><summary>Pista 3</summary><p>Si te salen 17 filas en vez de 20, revisa <strong>dónde</strong> pusiste la condición de <code>cancelled</code>: no es lo mismo filtrar en el <code>where</code> que en el <code>on</code> del <code>join</code>.</p></details>
+<details><summary>Pista 4</summary><p>La suma de nada es <code>null</code>, no <code>0</code>. Mira <code>coalesce(valor, 0)</code>, y <code>round(valor, 2)</code> para los decimales.</p></details>
+</main></body>
+</html>
