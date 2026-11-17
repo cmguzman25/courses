@@ -1,0 +1,66 @@
+services:
+  # PostgreSQL server. The "shop" database is the pristine reference copy;
+  # each student works on their own copy (shop_<name>), created with scripts/reset-db.sh.
+  db:
+    image: postgres:18
+    container_name: sql-db
+    ports:
+      - "127.0.0.1:5450:5432"     # 5450 on Windows, to avoid clashing with other Postgres
+    environment:
+      - POSTGRES_USER=student
+      - POSTGRES_PASSWORD=student
+      - POSTGRES_DB=shop
+    volumes:
+      - "sql-data:/var/lib/postgresql"
+      - "./docker/postgres/init:/docker-entrypoint-initdb.d:ro"   # runs only the first time
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U student -d shop"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # Toolbox: you work inside this one (psql, createdb, dropdb...)
+  herramientas:
+    image: postgres:18
+    container_name: sql-herramientas
+    entrypoint: ["sleep", "infinity"]
+    working_dir: /curso
+    volumes:
+      - "./:/curso"                # course folder, shared with Windows
+    environment:
+      - PGHOST=db
+      - PGUSER=student
+      - PGPASSWORD=student
+      - PGDATABASE=shop
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Graphical client in the browser: http://localhost:5061
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: sql-pgadmin
+    ports:
+      - "127.0.0.1:5061:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=student@example.com
+      - PGADMIN_DEFAULT_PASSWORD=student
+      - PGADMIN_CONFIG_SERVER_MODE=False
+      - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
+    volumes:
+      - "./docker/pgadmin/servers.json:/pgadmin4/servers.json:ro"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  sql-data:
+
+# Dedicated network with a fixed range. Avoids the "all predefined address pools
+# have been fully subnetted" error when Docker already has many networks.
+networks:
+  default:
+    name: curso-sql
+    ipam:
+      config:
+        - subnet: 10.170.0.0/24
