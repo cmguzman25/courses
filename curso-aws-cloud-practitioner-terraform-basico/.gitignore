@@ -1,0 +1,12 @@
+# AWS credentials (access keys). NEVER commit them.
+.aws/
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log
+
+# Lambda packages
+**/build/

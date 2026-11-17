@@ -1,0 +1,26 @@
+services:
+  # Toolbox: you work inside this one (Terraform, AWS CLI).
+  # There is no AWS emulator: this course works against a real AWS account.
+  herramientas:
+    build: ./docker/herramientas
+    container_name: cp-herramientas          # "cp" = Cloud Practitioner; avoids clashing with other courses
+    working_dir: /curso
+    volumes:
+      - "./:/curso"                                   # course folder, shared with Windows
+      - "./.aws:/root/.aws"                           # AWS credentials (one profile per student). Never commit!
+      - "terraform-plugins:/root/.terraform.d/plugin-cache"
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - TF_PLUGIN_CACHE_DIR=/root/.terraform.d/plugin-cache
+
+volumes:
+  terraform-plugins:
+
+# Dedicated network with a fixed range. Avoids the "all predefined address pools
+# have been fully subnetted" error when Docker already has many networks.
+networks:
+  default:
+    name: curso-cloud-practitioner
+    ipam:
+      config:
+        - subnet: 10.160.0.0/24

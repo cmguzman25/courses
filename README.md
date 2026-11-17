@@ -10,6 +10,7 @@ Repositorio de aprendizaje. Todo se construye con el mismo motor de estudio.
 | [`aws-cloud-practitioner/`](aws-cloud-practitioner/README.md) | Curso activo: certificación AWS CLF-C02. |
 | `trascripcion-videos/` | (existente) |
 | [`curso-arquitectura-datos-aws-basico/`](curso-arquitectura-datos-aws-basico/temario.md) | Curso **guiado** con Claude: arquitectura de datos en AWS con Terraform y Docker. Multi-alumno. |
+| [`curso-aws-cloud-practitioner-terraform-basico/`](curso-aws-cloud-practitioner-terraform-basico/README.md) | Curso **guiado** con Claude: práctica de Cloud Practitioner en AWS real con Terraform. Multi-alumno. |
 
 > Para crear un curso **guiado** (Claude como profesor, todo en Docker, varios alumnos), el patrón está en [`CLAUDE.md`](CLAUDE.md).
 
